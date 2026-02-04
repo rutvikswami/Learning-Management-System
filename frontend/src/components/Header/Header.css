@@ -1,0 +1,93 @@
+.header{
+    height:34vw;
+    margin:30px auto;
+    background: url('../../assets/banner.png') no-repeat right center;
+    background-size: contain;
+    background-color:#ffffff;
+    position:relative;
+    width:80%;
+}
+
+/* Content */
+.header-contents{
+    position:absolute;
+    display:flex;
+    flex-direction: column;
+    align-items:flex-start;
+    gap:1vw;
+    max-width:45%;
+    top:50%;
+    left:6vw;
+    transform: translateY(-50%);
+    animation: fadeIn 1.8s ease;
+}
+
+/* Headings */
+.header-contents h2{
+    font-weight:700;
+    color:#1a1a1a;
+    font-size:max(3.5vw,26px);
+    line-height:1.1;
+}
+
+/* Small "with" */
+.header-contents p:first-of-type{
+    font-size:1.1vw;
+    font-weight:500;
+    color:#666;
+}
+
+/* Description */
+.header-contents p:last-of-type{
+    color:#555;
+    font-size:1.1vw;
+    line-height:1.6;
+    max-width:90%;
+}
+
+/* Button */
+.header-contents button{
+    margin-top:1vw;
+    padding:0.9vw 2.2vw;
+    border:none;
+    border-radius:999px;
+    background:#000;
+    color:#fff;
+    font-size:max(1vw,14px);
+    font-weight:500;
+    cursor:pointer;
+    box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    transition:all 0.25s ease;
+}
+
+.header-contents button:hover{
+    background:#222;
+    transform: translateY(-2px);
+}
+
+/* Animation */
+@keyframes fadeIn{
+    from{
+        opacity:0;
+        transform: translate(-20px, -50%);
+    }
+    to{
+        opacity:1;
+        transform: translate(0, -50%);
+    }
+}
+
+/* Responsive */
+@media (max-width:900px){
+    .header{
+        height:60vw;
+        background-position:center bottom;
+    }
+    .header-contents{
+        max-width:80%;
+        left:5vw;
+    }
+    .header-contents p{
+        font-size:14px;
+    }
+}
