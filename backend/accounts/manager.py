@@ -21,6 +21,7 @@ class UserManager(BaseUserManager):
         ef.setdefault('is_staff',True)
         ef.setdefault('is_superuser',True)
         ef.setdefault('is_active',True)
+        ef.setdefault('role', 'admin')
 
         if ef.get('is_staff') is not True:
             raise ValueError("Superuser must have is_staff=True")
