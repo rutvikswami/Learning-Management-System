@@ -56,6 +56,25 @@ export const course_list = [
     instructor: "Stephane Maarek",
     description: "Understand cloud services and AWS fundamentals",
     category: "Cloud",
-  }
-  
+  },
 ];
+
+export const user_list = [
+  {
+    userId: "u1",
+    name: "Uday",
+    enrolledCourses: [
+      { courseId: "1", progress: 3 },
+      { courseId: "2", progress: 45 },
+    ],
+  },
+  {
+    userId: "u2",
+    name: "Alex",
+    enrolledCourses: [
+      { courseId: "3", progress: 70 },
+    ],
+  },
+];
+
+export const user_data = user_list;

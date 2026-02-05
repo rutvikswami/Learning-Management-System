@@ -1,34 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
-import { assets } from "../../assets/assets";
-
+import { assets, user_data } from "../../assets/assets";
 
 const Navbar = () => {
-  const [page, setPage] = useState("home");
+  
+  const currentUser = user_data[0]; 
 
   return (
     <div className="navbar">
       <h2 className="logo">EduSpark</h2>
+
       <ul className="navbar-menu">
-        <li
-          onClick={() => setPage("home")}
-          className={page === "home" ? "active" : ""}
-        >
-          Home
+        <li>
+          <NavLink
+            to="/"
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            Home
+          </NavLink>
         </li>
-        <li
-          onClick={() => setPage("my_learning")}
-          className={page === "my_learning" ? "active" : ""}
-        >
-          My Learning
+
+        <li>
+          <NavLink
+            to={`/my-learning/${currentUser.userId}`}
+            className={({ isActive }) => (isActive ? "active" : "")}
+          >
+            My Learning
+          </NavLink>
         </li>
       </ul>
+
       <div className="navbar-right">
         <div className="navbar-search-icon">
-          <input type="text" className="search-bar"/>
-          <img src={assets.search_icon} alt="" className = "search-icon" />
-
+          <input type="text" className="search-bar" />
+          <img src={assets.search_icon} alt="" className="search-icon" />
         </div>
+
+        <button>Log In</button>
         <button>Sign In</button>
       </div>
     </div>

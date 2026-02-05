@@ -1,0 +1,36 @@
+/* Whole content area under navbar */
+.learning-content {
+  padding: 32px 64px;
+  background-color: #ffffff;
+  min-height: calc(100vh - 200px);
+}
+
+/* All Courses / Wishlist container */
+.tab-page {
+  font-size: 18px;
+  font-weight: 500;
+  color: #1c1d1f;
+}
+
+/* Optional: course grid spacing (future-proof) */
+.courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+  margin-top: 24px;
+}
+
+/* Empty state styling (Wishlist) */
+.empty-state {
+  margin-top: 60px;
+  text-align: center;
+  color: #6a6f73;
+  font-size: 16px;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .learning-content {
+    padding: 24px 20px;
+  }
+}
