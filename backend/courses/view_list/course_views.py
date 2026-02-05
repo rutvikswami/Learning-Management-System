@@ -11,13 +11,18 @@ from courses.serializers import CourseSerializer, SectionSerializer, ChapterSeri
 from courses.permissions import IsCreator
 
 class CourseListCreateView(APIView):
+
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [AllowAny()]
+        return [IsAuthenticated(), IsCreator()]
+
     def get(self, request):
-        courses = Course.objects.filter(is_published=True)
+        courses = Course.objects.filter(is_published=True).prefetch_related('sections__chapters')
         s = CourseSerializer(courses, many = True)
         return Response(s.data)
     
     def post(self, request):
-        self.permission_classes = [IsAuthenticated, IsCreator]
         s = CourseSerializer(data = request.data)
         if s.is_valid():
             s.save(creator = request.user)
@@ -51,7 +56,7 @@ class CourseDetailView(APIView):
             s.save()
             return Response(s.data)
         return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
-
+    
 
     def delete(self, request, pk):
         course = self.get_object(pk)
@@ -70,6 +75,23 @@ class SectionCreateView(APIView):
             s.save()
             return Response(s.data, status=status.HTTP_201_CREATED)
         return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class SectionDetailView(APIView):
+    permission_classes = [IsAuthenticated, IsCreator]
+
+    def patch(self, request, pk):
+        section = get_object_or_404(Section, pk=pk)
+        s = SectionSerializer(section, data = request.data, partial = True)
+        if s.is_valid():
+            s.save()
+            return Response(s.data)
+        return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+        section = get_object_or_404(Section, pk=pk)
+        section.delete()
+        return Response({"message": "Section deleted"}, status=status.HTTP_204_NO_CONTENT)
+
 
 class ChapterCreateView(APIView):
     
@@ -81,3 +103,25 @@ class ChapterCreateView(APIView):
             s.save()
             return Response(s.data, status=status.HTTP_201_CREATED)
         return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ChapterDetailView(APIView):
+
+    permission_classes = [IsAuthenticated, IsCreator]
+
+    def patch(self,request,pk):
+
+        chapter = get_object_or_404(Chapter, pk=pk)
+
+        s = ChapterSerializer(chapter, data = request.data, partial = True)
+        if s.is_valid():
+            s.save()
+            return Response(s.data)
+        return Response(s.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def delete(self, request, pk):
+
+        chapter = get_object_or_404(Chapter, pk=pk)
+        chapter.delete()
+        return Response({"message":"Chapter deleted"}, status=status.HTTP_204_NO_CONTENT)
+    
+

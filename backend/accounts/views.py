@@ -22,6 +22,9 @@ class UserView(APIView):
         return Response(s.errors,status=status.HTTP_400_BAD_REQUEST)
         
 class LoginView(APIView):
+
+    permission_classes = [AllowAny]
+
     def post(self,request):
         email = request.data.get('email')
         password = request.data.get('password')

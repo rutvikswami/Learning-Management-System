@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.db.models import F
+from django.db.models import F, Sum
 # Create your models here.
 
 User = settings.AUTH_USER_MODEL
@@ -27,9 +27,9 @@ class Course(models.Model):
     def calculate_total_hours(self):
         total_minutes = Chapter.objects.filter(
             section__course=self
-        ).aggregate(total = sum('video_duration'))['total'] or 0
+        ).aggregate(total = Sum('video_duration'))['total'] or 0
 
-        return round(total_minutes/60)
+        return round(total_minutes/60, 2)
     
     def save(self, *args, **kwargs):
         self.total_hours = self.calculate_total_hours()

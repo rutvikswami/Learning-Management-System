@@ -83,13 +83,17 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mydb3',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'NAME': os.getenv('DB_NAME', BASE_DIR / 'db.sqlite3'),
+        'USER': os.getenv('DB_USER', ''),
+        'PASSWORD': os.getenv('DB_PASSWORD', ''),
         'HOST':'localhost',
         'PORT':'3306',
     }
@@ -165,3 +169,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 AUTH_USER_MODEL = 'accounts.User'
+
+AUTHENTICATION_BACKENDS = [
+    'accounts.backends.EmailBackend',  # Custom backend for email authentication
+    'django.contrib.auth.backends.ModelBackend',  # Keep as fallback
+]
